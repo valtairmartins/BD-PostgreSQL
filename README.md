@@ -18,13 +18,13 @@ Nossas análises revelaram uma disparidade crítica: **50% de nossa receita depe
 
 A auditoria inicial revelou e corrigiu falhas críticas de integridade, garantindo que as análises fossem construídas sobre dados 100% limpos.
 
-### 🛠️ Principais Ações de Limpeza:
+### 🛠️ Principais Ações de Limpeza
 
-1. **Remoção de Duplicatas:** Exclusão de **896 linhas completamente nulas** (`NULL`), saneando a completude dos dados.  
-2. **Correção de Tipagem:** Correção do tipo da coluna de valor para **`NUMERIC(10, 2)`** (antes incorretamente definido como `NUM`).  
-3. **Normalização de Texto:** Padronização da grafia de "Seguro Assistência" para eliminar inconsistências de agregação.
+- **Remoção de Duplicatas:** Exclusão de **896 linhas completamente nulas (NULL)**, saneando a completude dos dados.  
+- **Correção de Tipagem:** Ajuste da coluna de valor para **NUMERIC(10, 2)** (antes incorretamente definida como `NUM`).  
+- **Normalização de Texto:** Padronização da grafia de *“Seguro Assistência”* para eliminar inconsistências de agregação.
 
-### 💡 Código SQL de Saneamento:
+### 💡 Código SQL de Saneamento
 
 ```sql
 -- 1. Remoção de 896 Duplicatas de NULLs
@@ -36,27 +36,21 @@ UPDATE public.vendas_seguros
 SET produto = 'Seguro Assistencia'
 WHERE produto = 'Seguro Assistência';
 
-## 2. 📊 Análise de Impacto de Negócio: Foco no Retorno
+2. 📊 Análise de Impacto de Negócio: Foco no Retorno
 
 As análises a seguir fornecem a inteligência necessária para o planejamento de metas e alocação de recursos.
 
----
+2.1. 💰 O Motor da Receita: Ticket Médio
 
-### 2.1. O Motor da Receita: Ticket Médio
+A alta participação do Seguro de Vida na receita é explicada pelo seu valor médio por transação.
 
-A alta participação do **Seguro de Vida** na receita é explicada pelo seu valor por transação.
-
-| Produto | Ticket Médio |
-| :--- | ---: |
+| Produto            |    Ticket Médio |
+| :----------------- | --------------: |
 | **Seguro de Vida** | **R$ 1.681,37** |
-| Seguro Residencial | R$ 938,08 |
-| Seguro Assistencia | R$ 494,23 |
-| Seguro Prestamista | R$ 219,14 |
+| Seguro Residencial |       R$ 938,08 |
+| Seguro Assistencia |       R$ 494,23 |
+| Seguro Prestamista |       R$ 219,14 |
 
-**Exportar para as Planilhas**
-
-**SQL:**
-```sql
 SELECT
     produto,
     ROUND(AVG(valor_venda), 2) AS ticket_medio
@@ -64,15 +58,15 @@ FROM public.vendas_seguros
 GROUP BY produto
 ORDER BY ticket_medio DESC;
 
-### 2.2. Tendência Mensal: Sazonalidade e Volatilidade
+2.2. 📅 Tendência Mensal: Sazonalidade e Volatilidade
 
-A receita é volátil, concentrando-se em períodos específicos, apesar de o número de vendas ser constante.
+A receita apresenta volatilidade, concentrando-se em períodos específicos,
+apesar de o número de vendas permanecer estável.
 
-| Mês de Pico |   Receita Mensal | Desafio                                          |
-| :---------: | ---------------: | :----------------------------------------------- |
-|  **Março**  | **R$ 15.476,75** | Pico absoluto de receita (Alto Ticket)           |
-|   Novembro  |     R$ 14.776,90 | Segundo maior pico (Alto Ticket)                 |
-|   Dezembro  |      R$ 1.668,10 | Queda Alarmante (Vendas de baixo ticket dominam) |
+Mês de Pico	Receita Mensal	Desafio
+Março	R$ 15.476,75	Pico absoluto de receita (Alto Ticket)
+Novembro	R$ 14.776,90	Segundo maior pico (Alto Ticket)
+Dezembro	R$ 1.668,10	Queda Alarmante (Vendas de baixo ticket dominam)
 
 SELECT
     DATE_TRUNC('month', data_venda)::DATE AS mes_referencia,
@@ -82,9 +76,11 @@ WHERE data_venda IS NOT NULL
 GROUP BY mes_referencia
 ORDER BY mes_referencia;
 
-### 2.3. O Topo e a Base: Vendas Extremas
+2.3. 🏆 O Topo e a Base: Vendas Extremas
 
-As 5 maiores vendas são compostas 100% por Seguro de Vida, e as menores, 100% por Seguro Prestamista, reforçando a concentração de valor.
+As 5 maiores vendas são compostas 100% por Seguro de Vida,
+enquanto as 5 menores são 100% Seguro Prestamista, reforçando a concentração de valor.
+
 WITH RankedSales AS (
     SELECT data_venda, produto, valor_venda,
         ROW_NUMBER() OVER (ORDER BY valor_venda DESC) AS rank_maior,
@@ -98,14 +94,17 @@ FROM RankedSales
 WHERE rank_maior <= 5 OR rank_menor <= 5
 ORDER BY valor_venda DESC;
 
-## Recomendações Estratégicas para o Corpo Executivo
+📈 Recomendações Estratégicas para o Corpo Executivo
 
-1. Foco em Alto Ticket (Vida e Residencial):
+🎯 Foco em Alto Ticket (Vida e Residencial):
 Redirecionar o orçamento de marketing e incentivo comercial para os produtos com ticket mais alto.
-Cada venda de Vida tem um ROI (Retorno sobre Investimento) 7 vezes maior que uma venda de Prestamista.
+Cada venda de Vida tem um ROI 7x maior que uma venda de Prestamista.
 
-2. Mitigação da Queda de Dezembro:
-Planejar uma campanha de alto valor específica para Dezembro, incentivando a venda de Seguro de Vida para reverter a queda histórica da receita.
+📅 Mitigação da Queda de Dezembro:
+Planejar uma campanha de alto valor específica para Dezembro,
+incentivando a venda de Seguro de Vida para reverter a queda histórica da receita.
 
-3. Automatização de Baixo Valor:
-Transferir a venda de Seguro Prestamista e Assistência para canais de cross-sell automatizado (e-mail, site), liberando o tempo da equipe comercial para focar exclusivamente nos produtos de alta receita.
+⚙️ Automatização de Baixo Valor:
+Transferir a venda de Seguro Prestamista e Assistência para canais de cross-sell automatizado
+(e-mail, site, chatbot), liberando o tempo da equipe comercial para focar em produtos de alta receita.
+

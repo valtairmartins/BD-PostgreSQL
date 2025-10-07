@@ -24,10 +24,7 @@ A auditoria inicial revelou e corrigiu falhas críticas de integridade, garantin
 - **Correção de Tipagem:** Ajuste da coluna de valor para **NUMERIC(10, 2)** (antes incorretamente definida como `NUM`).  
 - **Normalização de Texto:** Padronização da grafia de *“Seguro Assistência”* para eliminar inconsistências de agregação.
 
-###  Código SQL 
-
-```sql
--- 1. Remoção de 896 Duplicatas de NULLs
+- -- 1. Remoção de 896 Duplicatas de NULLs
 DELETE FROM public.vendas_seguros 
 WHERE data_venda IS NULL AND produto IS NULL AND valor_venda IS NULL;
 
@@ -51,6 +48,7 @@ A alta participação do Seguro de Vida na receita é explicada pelo seu valor m
 | Seguro Assistencia |       R$ 494,23 |
 | Seguro Prestamista |       R$ 219,14 |
 
+###  Código SQL 
 SELECT
     produto,
     ROUND(AVG(valor_venda), 2) AS ticket_medio
@@ -93,6 +91,9 @@ SELECT data_venda, produto, valor_venda,
 FROM RankedSales
 WHERE rank_maior <= 5 OR rank_menor <= 5
 ORDER BY valor_venda DESC;
+
+
+
 
 # Recomendações Estratégicas para o Corpo Executivo
 

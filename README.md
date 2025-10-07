@@ -59,15 +59,17 @@ ORDER BY ticket_medio DESC;
 
 
 
+
 2.2.  Tendência Mensal: Sazonalidade e Volatilidade
 
 A receita apresenta volatilidade, concentrando-se em períodos específicos,
 apesar de o número de vendas permanecer estável.
 
-Mês de Pico	Receita Mensal	Desafio
-Março	R$ 15.476,75	Pico absoluto de receita (Alto Ticket)
-Novembro	R$ 14.776,90	Segundo maior pico (Alto Ticket)
-Dezembro	R$ 1.668,10	Queda Alarmante (Vendas de baixo ticket dominam)
+| Mês de Pico |   Receita Mensal | Desafio                                          |
+| :---------: | ---------------: | :----------------------------------------------- |
+|  **Março**  | **R$ 15.476,75** | Pico absoluto de receita (Alto Ticket)           |
+|   Novembro  |     R$ 14.776,90 | Segundo maior pico (Alto Ticket)                 |
+|   Dezembro  |      R$ 1.668,10 | Queda Alarmante (Vendas de baixo ticket dominam) |
 
 
 SELECT
@@ -77,6 +79,7 @@ FROM public.vendas_seguros
 WHERE data_venda IS NOT NULL
 GROUP BY mes_referencia
 ORDER BY mes_referencia;
+
 
 
 

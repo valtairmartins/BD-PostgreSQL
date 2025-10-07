@@ -56,6 +56,9 @@ FROM public.vendas_seguros
 GROUP BY produto
 ORDER BY ticket_medio DESC;
 
+
+
+
 2.2.  Tendência Mensal: Sazonalidade e Volatilidade
 
 A receita apresenta volatilidade, concentrando-se em períodos específicos,
@@ -66,6 +69,7 @@ Março	R$ 15.476,75	Pico absoluto de receita (Alto Ticket)
 Novembro	R$ 14.776,90	Segundo maior pico (Alto Ticket)
 Dezembro	R$ 1.668,10	Queda Alarmante (Vendas de baixo ticket dominam)
 
+
 SELECT
     DATE_TRUNC('month', data_venda)::DATE AS mes_referencia,
     SUM(valor_venda) AS receita_mensal
@@ -74,10 +78,16 @@ WHERE data_venda IS NOT NULL
 GROUP BY mes_referencia
 ORDER BY mes_referencia;
 
+
+
+
+
 2.3.  O Topo e a Base: Vendas Extremas
 
 As 5 maiores vendas são compostas 100% por Seguro de Vida,
 enquanto as 5 menores são 100% Seguro Prestamista, reforçando a concentração de valor.
+
+
 
 WITH RankedSales AS (
     SELECT data_venda, produto, valor_venda,
@@ -91,6 +101,10 @@ SELECT data_venda, produto, valor_venda,
 FROM RankedSales
 WHERE rank_maior <= 5 OR rank_menor <= 5
 ORDER BY valor_venda DESC;
+
+
+
+
 
 
 

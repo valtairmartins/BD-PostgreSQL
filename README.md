@@ -24,7 +24,7 @@ A auditoria inicial revelou e corrigiu falhas críticas de integridade, garantin
 - **Correção de Tipagem:** Ajuste da coluna de valor para **NUMERIC(10, 2)** (antes incorretamente definida como `NUM`).  
 - **Normalização de Texto:** Padronização da grafia de *“Seguro Assistência”* para eliminar inconsistências de agregação.
 
-###  Código SQL de Saneamento
+###  Código SQL 
 
 ```sql
 -- 1. Remoção de 896 Duplicatas de NULLs

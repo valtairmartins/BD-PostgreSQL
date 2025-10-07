@@ -56,10 +56,6 @@ FROM public.vendas_seguros
 GROUP BY produto
 ORDER BY ticket_medio DESC;
 
-
-
-
-
 2.2.  Tendência Mensal: Sazonalidade e Volatilidade
 
 A receita apresenta volatilidade, concentrando-se em períodos específicos,
@@ -71,7 +67,6 @@ apesar de o número de vendas permanecer estável.
 |   Novembro  |     R$ 14.776,90 | Segundo maior pico (Alto Ticket)                 |
 |   Dezembro  |      R$ 1.668,10 | Queda Alarmante (Vendas de baixo ticket dominam) |
 
-
 SELECT
     DATE_TRUNC('month', data_venda)::DATE AS mes_referencia,
     SUM(valor_venda) AS receita_mensal
@@ -79,11 +74,6 @@ FROM public.vendas_seguros
 WHERE data_venda IS NOT NULL
 GROUP BY mes_referencia
 ORDER BY mes_referencia;
-
-
-
-
-
 
 2.3.  O Topo e a Base: Vendas Extremas
 

@@ -1,8 +1,8 @@
-# 🚀 Projeto de Data-Driven Strategy: Alavancando a Receita de Seguros
+#  Projeto de Data-Driven Strategy: Alavancando a Receita de Seguros
 
 Este projeto documenta o processo de saneamento, validação e análise de um conjunto de dados de vendas de seguros. Usando **PostgreSQL** e técnicas avançadas de SQL, transformamos dados brutos em **insights de negócio claros e acionáveis** para o corpo executivo.
 
-## 🎯 Sumário Executivo: Foco Estratégico
+##  Sumário Executivo: Foco Estratégico
 
 Nossas análises revelaram uma disparidade crítica: **50% de nossa receita depende de apenas 25% de nossos produtos (Seguro de Vida)**. Além disso, a performance é **altamente sazonal**, com picos de alto valor concentrados em Março e Novembro.
 
@@ -14,17 +14,17 @@ Nossas análises revelaram uma disparidade crítica: **50% de nossa receita depe
 
 ---
 
-## 1. 🧹 Fase de Qualidade de Dados (DQ): A Base da Confiança
+## 1. Fase de Qualidade de Dados (DQ): A Base da Confiança
 
 A auditoria inicial revelou e corrigiu falhas críticas de integridade, garantindo que as análises fossem construídas sobre dados 100% limpos.
 
-### 🛠️ Principais Ações de Limpeza
+###  Principais Ações de Limpeza
 
 - **Remoção de Duplicatas:** Exclusão de **896 linhas completamente nulas (NULL)**, saneando a completude dos dados.  
 - **Correção de Tipagem:** Ajuste da coluna de valor para **NUMERIC(10, 2)** (antes incorretamente definida como `NUM`).  
 - **Normalização de Texto:** Padronização da grafia de *“Seguro Assistência”* para eliminar inconsistências de agregação.
 
-### 💡 Código SQL de Saneamento
+###  Código SQL de Saneamento
 
 ```sql
 -- 1. Remoção de 896 Duplicatas de NULLs
@@ -36,11 +36,11 @@ UPDATE public.vendas_seguros
 SET produto = 'Seguro Assistencia'
 WHERE produto = 'Seguro Assistência';
 
-2. 📊 Análise de Impacto de Negócio: Foco no Retorno
+2.  Análise de Impacto de Negócio: Foco no Retorno
 
 As análises a seguir fornecem a inteligência necessária para o planejamento de metas e alocação de recursos.
 
-2.1. 💰 O Motor da Receita: Ticket Médio
+2.1.  O Motor da Receita: Ticket Médio
 
 A alta participação do Seguro de Vida na receita é explicada pelo seu valor médio por transação.
 
@@ -58,7 +58,7 @@ FROM public.vendas_seguros
 GROUP BY produto
 ORDER BY ticket_medio DESC;
 
-2.2. 📅 Tendência Mensal: Sazonalidade e Volatilidade
+2.2.  Tendência Mensal: Sazonalidade e Volatilidade
 
 A receita apresenta volatilidade, concentrando-se em períodos específicos,
 apesar de o número de vendas permanecer estável.
@@ -76,7 +76,7 @@ WHERE data_venda IS NOT NULL
 GROUP BY mes_referencia
 ORDER BY mes_referencia;
 
-2.3. 🏆 O Topo e a Base: Vendas Extremas
+2.3.  O Topo e a Base: Vendas Extremas
 
 As 5 maiores vendas são compostas 100% por Seguro de Vida,
 enquanto as 5 menores são 100% Seguro Prestamista, reforçando a concentração de valor.
@@ -94,17 +94,17 @@ FROM RankedSales
 WHERE rank_maior <= 5 OR rank_menor <= 5
 ORDER BY valor_venda DESC;
 
-📈 Recomendações Estratégicas para o Corpo Executivo
+# Recomendações Estratégicas para o Corpo Executivo
 
-🎯 Foco em Alto Ticket (Vida e Residencial):
+1. Foco em Alto Ticket (Vida e Residencial):
 Redirecionar o orçamento de marketing e incentivo comercial para os produtos com ticket mais alto.
 Cada venda de Vida tem um ROI 7x maior que uma venda de Prestamista.
 
-📅 Mitigação da Queda de Dezembro:
+2.  Mitigação da Queda de Dezembro:
 Planejar uma campanha de alto valor específica para Dezembro,
 incentivando a venda de Seguro de Vida para reverter a queda histórica da receita.
 
-⚙️ Automatização de Baixo Valor:
+3.  Automatização de Baixo Valor:
 Transferir a venda de Seguro Prestamista e Assistência para canais de cross-sell automatizado
 (e-mail, site, chatbot), liberando o tempo da equipe comercial para focar em produtos de alta receita.
 

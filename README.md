@@ -24,14 +24,9 @@ A auditoria inicial revelou e corrigiu falhas críticas de integridade, garantin
 - **Correção de Tipagem:** Ajuste da coluna de valor para **NUMERIC(10, 2)** (antes incorretamente definida como `NUM`).  
 - **Normalização de Texto:** Padronização da grafia de *“Seguro Assistência”* para eliminar inconsistências de agregação.
 
-- -- 1. Remoção de 896 Duplicatas de NULLs
-DELETE FROM public.vendas_seguros 
-WHERE data_venda IS NULL AND produto IS NULL AND valor_venda IS NULL;
+- -- a. Remoção de 896 Duplicatas de NULLs
 
--- 2. Correção de Inconsistência de Texto (Padronização)
-UPDATE public.vendas_seguros
-SET produto = 'Seguro Assistencia'
-WHERE produto = 'Seguro Assistência';
+-- b. Correção de Inconsistência de Texto (Padronização)
 
 2.  Análise de Impacto de Negócio: Foco no Retorno
 

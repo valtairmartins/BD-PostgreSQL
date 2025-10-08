@@ -1,4 +1,4 @@
-#  Projeto de Data-Driven Strategy: Alavancando a Receita de Seguros
+#  Projeto de Data-Driven Strategy: Alavancando a Receita de Seguros - 2025
 
 Este projeto documenta o processo de limpeza e correção dos dados, validação e análise de um conjunto de dados de vendas de seguros. Usando **PostgreSQL** e técnicas avançadas de SQL, transformamos dados brutos em **insights de negócio claros e acionáveis** para o corpo executivo.
 
